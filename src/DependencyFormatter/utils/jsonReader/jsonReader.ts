@@ -1,4 +1,4 @@
-export async function jsonReader(file: File | null | undefined): Promise<unknown> {
+export async function jsonReader(file: File | null | undefined): Promise<object> {
   const uploadEvent = new Promise<ProgressEvent<FileReader>>((resolve, reject) => {
     if (file) {
       const fileReader = new FileReader();
@@ -13,5 +13,5 @@ export async function jsonReader(file: File | null | undefined): Promise<unknown
   if (typeof loadedFile !== 'string') {
     throw Error('Bad file format');
   }
-  return JSON.parse(loadedFile) as unknown;
+  return JSON.parse(loadedFile) as object;
 }

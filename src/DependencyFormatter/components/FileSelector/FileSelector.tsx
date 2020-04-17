@@ -3,7 +3,7 @@ import { Form, Formik } from 'formik';
 import { jsonReader } from '../../utils';
 
 interface FileSelectorProps {
-  onFileLoaded?: (json: unknown) => void;
+  onFileLoaded?: (json: object) => void;
 }
 
 interface FileSelectorFormValue {
