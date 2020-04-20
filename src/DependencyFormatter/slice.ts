@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface DependencyFormatterState {
+export interface DependencyFormatterState {
   dependencies: Record<string, string>;
 }
 
