@@ -6,11 +6,10 @@ export function AppRouter() {
   return (
     <BrowserRouter>
       <Switch>
-        <Redirect exact path="/" to="/dependency-formatter" />
         <Route path="/dependency-formatter">
           <DependencyFormatter />
         </Route>
-        <Redirect path="*" to="/dependency-formatter" />
+        <Redirect to="/dependency-formatter" />
       </Switch>
     </BrowserRouter>
   );

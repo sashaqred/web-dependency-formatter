@@ -12,14 +12,13 @@ export function DependencyFormatter() {
 
   return (
     <Switch>
-      <Redirect exact path={path} to={`${path}/upload`} />
       <Route path={`${path}/upload`}>
         <FileSelector onFileLoaded={uploadCallback} />
       </Route>
       <Route exact path={`${path}/format`}>
         <h1>Format uploaded file</h1>
       </Route>
-      <Redirect path={`${path}/*`} to={`${path}/upload`} />
+      <Redirect to={`${path}/upload`} />
     </Switch>
   );
 }
