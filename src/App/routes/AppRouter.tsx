@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import { DependencyFormatter } from './DependencyFormatter';
+import { DependencyFormatter } from '../../DependencyFormatter';
 
-export function AppRouting() {
+export function AppRouter() {
   return (
     <BrowserRouter>
       <Switch>
