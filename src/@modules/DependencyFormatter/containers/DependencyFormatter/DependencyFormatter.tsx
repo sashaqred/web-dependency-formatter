@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { Switch, Route, useRouteMatch, Redirect, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { FileSelector } from '../../components';
-import { setDependencies } from '../../actions';
+import { recieveDependencies } from '../../actions';
 import { DependencyRedactor } from '../DependencyRedactor';
 
 export function DependencyFormatter() {
@@ -12,7 +12,7 @@ export function DependencyFormatter() {
 
   const uploadCallback = useCallback(
     (nextDependencies) => {
-      dispatch(setDependencies(nextDependencies));
+      dispatch(recieveDependencies(nextDependencies));
       history.push(`${path}/format`);
     },
     [path, history, dispatch],
