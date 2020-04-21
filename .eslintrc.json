@@ -7,9 +7,11 @@
   },
   "extends": ["react-app", "airbnb-typescript", "plugin:jsx-a11y/recommended"],
   "rules": {
-    "prettier/prettier": "error",
     "import/prefer-default-export": "off",
     "object-curly-newline": "off",
+
+    "prettier/prettier": "error",
+
     "no-param-reassign": [
       "error",
       { "props": true, "ignorePropertyModificationsFor": ["sliceState"] }
