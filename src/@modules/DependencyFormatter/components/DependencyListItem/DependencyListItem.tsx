@@ -2,9 +2,9 @@ import React from 'react';
 
 interface DependencyListItemProps {
   name: string;
-  version: string;
+  currentVersion: string;
 }
 
-export function DependencyListItem({ name, version }: DependencyListItemProps) {
-  return <li>{`${name}: ${version}`}</li>;
+export function DependencyListItem({ name, currentVersion }: DependencyListItemProps) {
+  return <li>{`${name}: ${currentVersion}`}</li>;
 }

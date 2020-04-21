@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Dependency } from './models';
 
 export interface DependencyFormatterState {
-  dependencies: Record<string, string>;
+  dependencies: Record<string, Dependency>;
 }
 
 interface SetDependenciesPayload {
@@ -19,7 +20,11 @@ const dependencyFormatterSlice = createSlice({
   initialState,
   reducers: {
     setDependencies(sliceState, action: PayloadAction<SetDependenciesPayload>) {
-      sliceState.dependencies = action.payload.dependencies;
+      const dependencies = Object.entries(action.payload.dependencies).reduce(
+        (map, [name, currentVersion]) => ({ ...map, [name]: { name, currentVersion } }),
+        {} as Record<string, Dependency>,
+      );
+      sliceState.dependencies = dependencies;
     },
     removeDependencies(sliceState) {
       sliceState.dependencies = {};
