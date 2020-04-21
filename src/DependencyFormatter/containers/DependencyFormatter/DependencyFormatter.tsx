@@ -3,6 +3,7 @@ import { Switch, Route, useRouteMatch, Redirect, useHistory } from 'react-router
 import { useDispatch } from 'react-redux';
 import { FileSelector } from '../../components';
 import { setDependencies } from '../../slice';
+import { DependencyRedactor } from '../DependencyRedactor';
 
 export function DependencyFormatter() {
   const { path } = useRouteMatch();
@@ -23,7 +24,7 @@ export function DependencyFormatter() {
         <FileSelector onFileLoaded={uploadCallback} />
       </Route>
       <Route exact path={`${path}/format`}>
-        <h1>Format uploaded file</h1>
+        <DependencyRedactor />
       </Route>
       <Redirect to={`${path}/upload`} />
     </Switch>
