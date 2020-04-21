@@ -2,7 +2,7 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import {
   dependencyFormatterReducer,
   DEPENDENCY_FORMATTER_SLICE_NAME,
-} from '@modules/DependencyFormatter';
+} from '@modules/DependencyFormatter/setupApi';
 
 export const rootReducer = combineReducers({
   [DEPENDENCY_FORMATTER_SLICE_NAME]: dependencyFormatterReducer,
