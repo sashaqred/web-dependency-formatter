@@ -9,6 +9,11 @@ interface SetDependenciesPayload {
   dependencies: Record<string, string>;
 }
 
+interface UpdateDependencyLatestVersionPayload {
+  name: string;
+  latestVersion: string;
+}
+
 const initialState: DependencyFormatterState = {
   dependencies: {},
 };
@@ -25,6 +30,15 @@ const dependencyFormatterSlice = createSlice({
         {} as Record<string, Dependency>,
       );
       sliceState.dependencies = dependencies;
+    },
+    updateDependencyLatesVersion(
+      sliceState,
+      { payload }: PayloadAction<UpdateDependencyLatestVersionPayload>,
+    ) {
+      const { name, latestVersion } = payload;
+      if (sliceState.dependencies[name]) {
+        sliceState.dependencies[name].latestVersion = latestVersion;
+      }
     },
     removeDependencies(sliceState) {
       sliceState.dependencies = {};
