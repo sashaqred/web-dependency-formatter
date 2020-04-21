@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import { DependencyFormatter } from '../../DependencyFormatter';
+import { DependencyFormatter } from '@modules/DependencyFormatter';
 
 export function AppRouter() {
   return (
