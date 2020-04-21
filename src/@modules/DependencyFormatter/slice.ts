@@ -26,7 +26,6 @@ const dependencyFormatterSlice = createSlice({
     },
   },
 });
-
-export const { setDependencies, removeDependencies } = dependencyFormatterSlice.actions;
+export const { actions } = dependencyFormatterSlice;
 
 export const dependencyFormatterReducer = dependencyFormatterSlice.reducer;

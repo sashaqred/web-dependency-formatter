@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { Switch, Route, useRouteMatch, Redirect, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { FileSelector } from '../../components';
-import { setDependencies } from '../../slice';
+import { setDependencies } from '../../actions';
 import { DependencyRedactor } from '../DependencyRedactor';
 
 export function DependencyFormatter() {
