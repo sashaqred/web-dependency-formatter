@@ -1,2 +1,1 @@
-export * from './containers';
-export * from './slice';
+export { DependencyFormatter } from './containers';

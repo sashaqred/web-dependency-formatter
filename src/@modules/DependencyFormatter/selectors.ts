@@ -1,11 +1,8 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { DEPENDENCY_FORMATTER_SLICE_NAME, DependencyFormatterState } from './slice';
+import { RootState } from '@modules/App/root';
+import { DEPENDENCY_FORMATTER_SLICE_NAME } from './slice';
 
-type FeatureState = {
-  [DEPENDENCY_FORMATTER_SLICE_NAME]: DependencyFormatterState;
-};
-
-export function depedencyFormatterSelector(state: FeatureState) {
+export function depedencyFormatterSelector(state: RootState) {
   return state[DEPENDENCY_FORMATTER_SLICE_NAME];
 }
 
