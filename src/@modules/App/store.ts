@@ -1,4 +1,4 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { configureStore, combineReducers, ThunkAction, Action } from '@reduxjs/toolkit';
 import {
   dependencyFormatterReducer,
   DEPENDENCY_FORMATTER_SLICE_NAME,
@@ -15,3 +15,5 @@ export const store = configureStore({
 });
 
 export type AppDispatch = typeof store.dispatch;
+
+export type AppThunk = ThunkAction<void, RootState, unknown, Action<string>>;
