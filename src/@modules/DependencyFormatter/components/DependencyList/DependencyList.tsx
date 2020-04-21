@@ -7,8 +7,13 @@ interface DependencyListProps {
 }
 
 export function DependencyList({ dependencies = [] }: DependencyListProps) {
-  const list = dependencies.map(({ name, currentVersion }) => (
-    <DependencyListItem key={name} name={name} currentVersion={currentVersion} />
+  const list = dependencies.map(({ name, currentVersion, latestVersion }) => (
+    <DependencyListItem
+      key={name}
+      name={name}
+      currentVersion={currentVersion}
+      latestVersion={latestVersion}
+    />
   ));
   return <ul>{list}</ul>;
 }
