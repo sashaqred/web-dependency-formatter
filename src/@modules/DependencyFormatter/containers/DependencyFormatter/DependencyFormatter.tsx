@@ -6,16 +6,16 @@ import { recieveDependencies } from '../../actions';
 import { DependencyRedactor } from '../DependencyRedactor';
 
 export function DependencyFormatter() {
-  const { path } = useRouteMatch();
+  const { path, url } = useRouteMatch();
   const history = useHistory();
   const dispatch = useDispatch();
 
   const uploadCallback = useCallback(
     (nextDependencies) => {
       dispatch(recieveDependencies(nextDependencies));
-      history.push(`${path}/format`);
+      history.push(`${url}/format`);
     },
-    [path, history, dispatch],
+    [url, history, dispatch],
   );
 
   return (
