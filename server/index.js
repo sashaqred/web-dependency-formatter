@@ -8,7 +8,6 @@ const port = process.env.PORT || 3001;
 app.use(cors());
 
 app.get('/api/npm/*', async (req, res, next) => {
-  // TODO #16 Improve error handling after 404
   try {
     const package = req.params[0];
     const result = await npmFetch.json(package);
@@ -18,13 +17,19 @@ app.get('/api/npm/*', async (req, res, next) => {
   }
 });
 
-app.use((req, res) => {
-  res.status(404).send();
+app.use((req, res, next) => {
+  const error = new Error('404 Not Found');
+  error.statusCode = 404;
+  next(error);
 });
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((err, req, res, next) => {
-  res.status(500).send();
+  const { statusCode = 500, message } = err;
+  res.status(statusCode).json({
+    statusCode,
+    message,
+  });
 });
 
 // eslint-disable-next-line no-console
