@@ -13,7 +13,7 @@ interface FileSelectorFormValue {
 function validateFileSelector(formValue: FileSelectorFormValue) {
   const errors: Partial<Record<keyof FileSelectorFormValue, string>> = {};
   const isJsonMimeType = formValue.package?.type === 'application/json';
-  const isJsonExtension = !!formValue.package?.name && /\.json$/i.test(formValue.package.name);
+  const isJsonExtension = /\.json$/i.test(formValue.package?.name || '');
   if (!(isJsonMimeType || isJsonExtension)) {
     errors.package = 'Please select JSON file.';
   }
