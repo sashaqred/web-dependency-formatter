@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useCallback } from 'react';
-import { Form, Formik } from 'formik';
+import { Form, Formik, ErrorMessage } from 'formik';
 import { jsonReader } from '../../utils';
 
 interface FileSelectorProps {
@@ -8,6 +8,16 @@ interface FileSelectorProps {
 
 interface FileSelectorFormValue {
   package: File | undefined | null;
+}
+
+function validateFileSelector(formValue: FileSelectorFormValue) {
+  const errors: Partial<Record<keyof FileSelectorFormValue, string>> = {};
+  const isJsonMimeType = formValue.package?.type === 'application/json';
+  const isJsonExtension = /\.json$/i.test(formValue.package?.name || '');
+  if (!(isJsonMimeType || isJsonExtension)) {
+    errors.package = 'Please select JSON file.';
+  }
+  return errors;
 }
 
 export function FileSelector({ onFileLoaded }: FileSelectorProps) {
@@ -26,17 +36,24 @@ export function FileSelector({ onFileLoaded }: FileSelectorProps) {
   );
 
   return (
-    <Formik initialValues={{ package: undefined }} onSubmit={submitCallback}>
-      {({ setFieldValue }) => (
+    <Formik
+      initialValues={{ package: undefined }}
+      validate={validateFileSelector}
+      onSubmit={submitCallback}
+    >
+      {({ setFieldValue, setFieldTouched }) => (
         <Form>
           <input
             type="file"
             name="package"
+            accept=".json, application/json"
             onChange={(event: ChangeEvent<HTMLInputElement>) => {
               const file = event.currentTarget.files?.[0];
+              setFieldTouched('package');
               setFieldValue('package', file);
             }}
           />
+          <ErrorMessage name="package" />
           <button type="submit">Submit</button>
         </Form>
       )}
