@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useCallback } from 'react';
-import { Form, Formik, ErrorMessage } from 'formik';
+import { Form, Formik } from 'formik';
+import { Button, FormError, InputFile } from '@modules/Styles';
 import { jsonReader } from '../../utils';
 
 interface FileSelectorProps {
@@ -43,8 +44,7 @@ export function FileSelector({ onFileLoaded }: FileSelectorProps) {
     >
       {({ setFieldValue, setFieldTouched }) => (
         <Form>
-          <input
-            type="file"
+          <InputFile
             name="package"
             accept=".json, application/json"
             onChange={(event: ChangeEvent<HTMLInputElement>) => {
@@ -53,8 +53,10 @@ export function FileSelector({ onFileLoaded }: FileSelectorProps) {
               setFieldValue('package', file);
             }}
           />
-          <ErrorMessage name="package" />
-          <button type="submit">Submit</button>
+          <br />
+          <FormError name="package" />
+          <br />
+          <Button type="submit">Submit</Button>
         </Form>
       )}
     </Formik>
