@@ -12,6 +12,8 @@
     "implicit-arrow-linebreak": "off",
     "function-paren-newline": "off",
     "react/jsx-one-expression-per-line": "off",
+    "@typescript-eslint/indent": "off",
+    "max-len": "off",
 
     "prettier/prettier": "error",
 
