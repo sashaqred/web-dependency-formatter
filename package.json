@@ -30,6 +30,7 @@
     "@types/react-dom": "~16.9",
     "@types/react-redux": "~7.1",
     "@types/react-router-dom": "~5.1",
+    "@types/recompose": "~0.30",
     "@types/semver": "~7.1",
     "cors": "~2.8",
     "express": "~4.17",
@@ -41,6 +42,7 @@
     "react-redux": "~7.2",
     "react-router-dom": "~5.1",
     "react-scripts": "~3.4",
+    "recompose": "~0.30",
     "semver": "~7.1",
     "typescript": "~3.8"
   },
