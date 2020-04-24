@@ -12,6 +12,7 @@
     "test:ci": "npm run test -- --watchAll=false --env=node",
     "lint": "npm run lint:formatting && npm run lint:script",
     "lint:script": "eslint ./src/**/*.{ts,tsx}",
+    "lint:styles": "stylelint ./src/**/*.{css,ts,tsx}",
     "lint:formatting": "prettier --check **/*",
     "eject": "react-scripts eject"
   },
@@ -59,6 +60,14 @@
     "eslint-plugin-react-hooks": "~3.0",
     "husky": "~4.2",
     "lint-staged": "~10.1",
-    "prettier": "~2.0"
+    "prettier": "~2.0",
+    "stylelint": "~13.3",
+    "stylelint-config-idiomatic-order": "~8.1",
+    "stylelint-config-standard": "~20.0",
+    "stylelint-declaration-block-no-ignored-properties": "~2.3",
+    "stylelint-high-performance-animation": "~1.5",
+    "stylelint-prettier": "~1.1",
+    "stylelint-use-logical": "~1.1",
+    "stylelint-use-nesting": "~2.0"
   }
 }
