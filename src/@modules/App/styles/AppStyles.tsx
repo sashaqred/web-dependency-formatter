@@ -20,6 +20,7 @@ const styles = css`
   }
 
   * {
+    box-sizing: border-box;
     font-size: 1rem;
   }
 
