@@ -6,7 +6,6 @@ export function depedencyFormatterSelector(state: RootState) {
   return state[DEPENDENCY_FORMATTER_SLICE_NAME];
 }
 
-export const selectDependencies = createSelector(
-  depedencyFormatterSelector,
-  (depedencyFormatter) => depedencyFormatter.dependencies,
+export const selectDependencies = createSelector(depedencyFormatterSelector, (depedencyFormatter) =>
+  Object.values(depedencyFormatter.dependencies),
 );

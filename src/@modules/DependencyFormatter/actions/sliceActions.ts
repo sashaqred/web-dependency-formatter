@@ -1,3 +1,3 @@
 import { actions } from '../slice';
 
-export const { setDependencies, removeDependencies } = actions;
+export const { setDependencies, removeDependencies, updateDependencyLatesVersion } = actions;

@@ -1,13 +1,19 @@
 import React from 'react';
 import { DependencyListItem } from '../DependencyListItem';
+import { Dependency } from '../../models';
 
 interface DependencyListProps {
-  dependencies?: Record<string, string>;
+  dependencies?: Dependency[];
 }
 
-export function DependencyList({ dependencies = {} }: DependencyListProps) {
-  const list = Object.entries(dependencies).map(([name, version]) => (
-    <DependencyListItem key={name} name={name} version={version} />
+export function DependencyList({ dependencies = [] }: DependencyListProps) {
+  const list = dependencies.map(({ name, currentVersion, latestVersion }) => (
+    <DependencyListItem
+      key={name}
+      name={name}
+      currentVersion={currentVersion}
+      latestVersion={latestVersion}
+    />
   ));
   return <ul>{list}</ul>;
 }

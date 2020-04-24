@@ -1,11 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Dependency } from './models';
 
 export interface DependencyFormatterState {
-  dependencies: Record<string, string>;
+  dependencies: Record<string, Dependency>;
 }
 
 interface SetDependenciesPayload {
   dependencies: Record<string, string>;
+}
+
+interface UpdateDependencyLatestVersionPayload {
+  name: string;
+  latestVersion: string;
 }
 
 const initialState: DependencyFormatterState = {
@@ -19,7 +25,20 @@ const dependencyFormatterSlice = createSlice({
   initialState,
   reducers: {
     setDependencies(sliceState, action: PayloadAction<SetDependenciesPayload>) {
-      sliceState.dependencies = action.payload.dependencies;
+      const dependencies = Object.entries(action.payload.dependencies).reduce(
+        (map, [name, currentVersion]) => ({ ...map, [name]: { name, currentVersion } }),
+        {} as Record<string, Dependency>,
+      );
+      sliceState.dependencies = dependencies;
+    },
+    updateDependencyLatesVersion(
+      sliceState,
+      { payload }: PayloadAction<UpdateDependencyLatestVersionPayload>,
+    ) {
+      const { name, latestVersion } = payload;
+      if (sliceState.dependencies[name]) {
+        sliceState.dependencies[name].latestVersion = latestVersion;
+      }
     },
     removeDependencies(sliceState) {
       sliceState.dependencies = {};
