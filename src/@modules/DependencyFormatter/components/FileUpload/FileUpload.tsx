@@ -1,26 +1,26 @@
 import React, { ChangeEvent } from 'react';
 import { InputFile, FormError } from '@modules/Styles';
-import { useFormikContext } from 'formik';
+import { useField } from 'formik';
 
 interface FileUploadProps {
   name: string;
 }
 
 export function FileUpload({ name }: FileUploadProps) {
-  const { setFieldTouched, setFieldValue } = useFormikContext();
+  const [field, , helpers] = useField({ name });
   return (
     <>
       <InputFile
-        name={name}
+        name={field.name}
         accept=".json, application/json"
         onChange={(event: ChangeEvent<HTMLInputElement>) => {
           const file = event.currentTarget.files?.[0];
-          setFieldTouched(name);
-          setFieldValue(name, file);
+          helpers.setTouched(true);
+          helpers.setValue(file);
         }}
       />
       <br />
-      <FormError name={name} />
+      <FormError name={field.name} />
     </>
   );
 }
