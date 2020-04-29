@@ -1,6 +1,7 @@
 const cors = require('cors');
 const express = require('express');
 const npmFetch = require('npm-registry-fetch');
+const fetch = require('node-fetch');
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -12,6 +13,17 @@ app.get('/api/npm/*', async (req, res, next) => {
     const package = req.params[0];
     const result = await npmFetch.json(package);
     res.json(result);
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get('/api/file', async (req, res, next) => {
+  try {
+    const result = await fetch(req.query.fileLink);
+    const text = await result.text();
+    const json = JSON.parse(text);
+    res.json(json);
   } catch (error) {
     next(error);
   }
