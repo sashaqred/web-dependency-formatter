@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { formatVersionByExample } from '../../utils';
+import { LatestVersionStyled } from './styled';
 
 interface DependencyListItemProps {
   name: string;
@@ -19,9 +20,17 @@ export function DependencyListItem({
     }
     return nextRange;
   }, [latestVersion, currentVersion]);
+  const isVersionsDifferent = useMemo(() => currentVersion !== latestRange, [
+    currentVersion,
+    latestRange,
+  ]);
 
-  const latest = latestVersion ? <>/ {latestVersion}</> : null;
-  const range = latestRange ? <>({latestRange})</> : null;
+  const latest = latestVersion ? (
+    <>
+      / <LatestVersionStyled isDifferent={isVersionsDifferent}>{latestVersion}</LatestVersionStyled>
+    </>
+  ) : null;
+  const range = latestRange && isVersionsDifferent ? <>({latestRange})</> : null;
   return (
     <li>
       <span>

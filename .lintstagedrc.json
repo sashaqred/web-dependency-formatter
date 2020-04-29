@@ -1,4 +1,5 @@
 {
   "*.(ts|tsx)": ["eslint"],
+  "*.(css|ts|tsx)": ["stylelint"],
   "*": ["prettier --check"]
 }

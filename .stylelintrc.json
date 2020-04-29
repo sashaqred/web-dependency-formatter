@@ -1,0 +1,22 @@
+{
+  "plugins": [
+    "stylelint-prettier",
+    "stylelint-high-performance-animation",
+    "stylelint-declaration-block-no-ignored-properties",
+    "stylelint-use-logical",
+    "stylelint-use-nesting"
+  ],
+  "extends": ["stylelint-config-standard", "stylelint-config-idiomatic-order"],
+  "rules": {
+    "no-empty-source": null,
+    "value-list-comma-newline-after": null,
+    "declaration-colon-newline-after": null,
+    "declaration-empty-line-before": null,
+
+    "prettier/prettier": true,
+    "plugin/no-low-performance-animation-properties": true,
+    "plugin/declaration-block-no-ignored-properties": true,
+    "csstools/use-logical": true,
+    "csstools/use-nesting": "always"
+  }
+}

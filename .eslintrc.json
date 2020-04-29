@@ -1,7 +1,7 @@
 {
   "root": true,
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "prettier"],
+  "plugins": ["@typescript-eslint", "prettier", "emotion"],
   "parserOptions": {
     "project": "./tsconfig.json"
   },
@@ -20,6 +20,22 @@
     "no-param-reassign": [
       "error",
       { "props": true, "ignorePropertyModificationsFor": ["sliceState"] }
+    ],
+    "emotion/jsx-import": "error",
+    "emotion/no-vanilla": "error",
+    "emotion/import-from-emotion": "error",
+    "emotion/styled-import": "error",
+    "no-restricted-imports": [
+      "error",
+      {
+        "name": "@emotion/core",
+        "importNames": ["css"],
+        "message": "Please use @emotion/css/macro instead."
+      },
+      {
+        "name": "@emotion/styled",
+        "message": "Please use @emotion/styled/macro instead."
+      }
     ]
   }
 }
