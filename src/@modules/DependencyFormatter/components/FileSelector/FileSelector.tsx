@@ -9,15 +9,15 @@ interface FileSelectorProps {
 }
 
 interface FileSelectorFormValue {
-  package: File | undefined;
+  packageFile: File | undefined;
 }
 
 function validateFileSelector(formValue: FileSelectorFormValue) {
   const errors: Partial<Record<keyof FileSelectorFormValue, string>> = {};
-  const isJsonMimeType = formValue.package?.type === 'application/json';
-  const isJsonExtension = /\.json$/i.test(formValue.package?.name || '');
+  const isJsonMimeType = formValue.packageFile?.type === 'application/json';
+  const isJsonExtension = /\.json$/i.test(formValue.packageFile?.name || '');
   if (!(isJsonMimeType || isJsonExtension)) {
-    errors.package = 'Please select JSON file.';
+    errors.packageFile = 'Please select JSON file.';
   }
   return errors;
 }
@@ -26,7 +26,7 @@ export function FileSelector({ onFileLoaded }: FileSelectorProps) {
   const submitCallback = useCallback(
     async (value: FileSelectorFormValue) => {
       try {
-        const json = await jsonReader(value.package);
+        const json = await jsonReader(value.packageFile);
         onFileLoaded?.(json);
       } catch (error) {
         // TODO #2 Add error handling
@@ -39,12 +39,12 @@ export function FileSelector({ onFileLoaded }: FileSelectorProps) {
 
   return (
     <Formik
-      initialValues={{ package: undefined }}
+      initialValues={{ packageFile: undefined }}
       validate={validateFileSelector}
       onSubmit={submitCallback}
     >
       <Form>
-        <FileUpload name="package" />
+        <FileUpload name="packageFile" />
         <br />
         <Button type="submit">Submit</Button>
       </Form>
