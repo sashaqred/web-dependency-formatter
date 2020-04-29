@@ -36,6 +36,12 @@
         "name": "@emotion/styled",
         "message": "Please use @emotion/styled/macro instead."
       }
+    ],
+    "jsx-a11y/label-has-associated-control": [
+      "error",
+      {
+        "assert": "either"
+      }
     ]
   }
 }
