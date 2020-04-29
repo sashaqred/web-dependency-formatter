@@ -12,16 +12,6 @@ interface FileSelectorFormValue {
   packageFile: File | undefined;
 }
 
-function validateFileSelector(formValue: FileSelectorFormValue) {
-  const errors: Partial<Record<keyof FileSelectorFormValue, string>> = {};
-  const isJsonMimeType = formValue.packageFile?.type === 'application/json';
-  const isJsonExtension = /\.json$/i.test(formValue.packageFile?.name || '');
-  if (!(isJsonMimeType || isJsonExtension)) {
-    errors.packageFile = 'Please select JSON file.';
-  }
-  return errors;
-}
-
 export function FileSelector({ onFileLoaded }: FileSelectorProps) {
   const submitCallback = useCallback(
     async (value: FileSelectorFormValue) => {
@@ -38,11 +28,7 @@ export function FileSelector({ onFileLoaded }: FileSelectorProps) {
   );
 
   return (
-    <Formik
-      initialValues={{ packageFile: undefined }}
-      validate={validateFileSelector}
-      onSubmit={submitCallback}
-    >
+    <Formik initialValues={{ packageFile: undefined }} onSubmit={submitCallback}>
       <Form>
         <FileUpload name="packageFile" />
         <br />
