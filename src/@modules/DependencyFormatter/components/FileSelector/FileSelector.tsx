@@ -9,7 +9,7 @@ interface FileSelectorProps {
 }
 
 interface FileSelectorFormValue {
-  package: File | undefined | null;
+  package: File | undefined;
 }
 
 function validateFileSelector(formValue: FileSelectorFormValue) {
