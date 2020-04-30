@@ -10,7 +10,7 @@ function fileUploadValidator(packageFile: File) {
   let error: string | undefined;
   const isJsonMimeType = packageFile?.type === 'application/json';
   const isJsonExtension = /\.json$/i.test(packageFile?.name || '');
-  if (!(isJsonMimeType || isJsonExtension)) {
+  if (packageFile && !(isJsonMimeType || isJsonExtension)) {
     error = 'Please select JSON file.';
   }
   return error;
