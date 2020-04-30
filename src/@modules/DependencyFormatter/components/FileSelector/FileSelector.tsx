@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { Form, Formik } from 'formik';
 import { Button } from '@modules/Styles';
+import { object, string, mixed } from 'yup';
 import { jsonReader, fetchFile } from '../../utils';
 import { FileUpload } from '../FileUpload';
 import { FileDownload } from '../FileDownload';
@@ -13,6 +14,19 @@ interface FileSelectorFormValue {
   packageFile: File | undefined;
   packageLink: string;
 }
+
+const fileSelectorSchema = object().shape({
+  packageFile: mixed().test(
+    'Is file JSON',
+    'Please select JSON file.',
+    (file: File | undefined) => {
+      const isJsonMimeType = file?.type === 'application/json';
+      const isJsonExtension = /\.json$/i.test(file?.name || '');
+      return !file || isJsonMimeType || isJsonExtension;
+    },
+  ),
+  packageLink: string().url('Must be a valid URL'),
+});
 
 export function FileSelector({ onFileLoaded }: FileSelectorProps) {
   const submitCallback = useCallback(
@@ -35,7 +49,11 @@ export function FileSelector({ onFileLoaded }: FileSelectorProps) {
   );
 
   return (
-    <Formik initialValues={{ packageFile: undefined, packageLink: '' }} onSubmit={submitCallback}>
+    <Formik
+      initialValues={{ packageFile: undefined, packageLink: '' }}
+      validationSchema={fileSelectorSchema}
+      onSubmit={submitCallback}
+    >
       <Form>
         <FileUpload name="packageFile" />
         <br />
