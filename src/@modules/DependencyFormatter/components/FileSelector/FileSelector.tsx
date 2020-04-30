@@ -1,6 +1,6 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, ReactNode } from 'react';
 import { Form, Formik } from 'formik';
-import { Button } from '@modules/Styles';
+import { Button, FormError } from '@modules/Styles';
 import { object, string, mixed } from 'yup';
 import { jsonReader, fetchFile } from '../../utils';
 import { FileUpload } from '../FileUpload';
@@ -20,14 +20,20 @@ interface FileSelectorFormValue {
 }
 
 const fileSelectorSchema = object().shape({
-  package: object().shape({
-    file: mixed().test('Is file JSON', 'Please select JSON file.', (file: File | undefined) => {
-      const isJsonMimeType = file?.type === 'application/json';
-      const isJsonExtension = /\.json$/i.test(file?.name || '');
-      return !file || isJsonMimeType || isJsonExtension;
-    }),
-    link: string().url('Must be a valid URL'),
-  }),
+  package: object()
+    .shape({
+      file: mixed().test('Is file JSON', 'Please select JSON file.', (file: File | undefined) => {
+        const isJsonMimeType = file?.type === 'application/json';
+        const isJsonExtension = /\.json$/i.test(file?.name || '');
+        return !file || isJsonMimeType || isJsonExtension;
+      }),
+      link: string().url('Must be a valid URL'),
+    })
+    .test(
+      'one-of-require',
+      'Please fill one of fields',
+      ({ file, link }: PackageGroup) => !!file && !!link,
+    ),
 });
 
 export function FileSelector({ onFileLoaded }: FileSelectorProps) {
@@ -50,6 +56,19 @@ export function FileSelector({ onFileLoaded }: FileSelectorProps) {
     [onFileLoaded],
   );
 
+  const errorRender = useCallback((error: object | string) => {
+    let result: ReactNode = null;
+    if (typeof error === 'string') {
+      result = (
+        <>
+          <span>{error}</span>
+          <br />
+        </>
+      );
+    }
+    return result;
+  }, []);
+
   return (
     <Formik
       initialValues={{ package: { file: undefined, link: '' } }}
@@ -57,6 +76,7 @@ export function FileSelector({ onFileLoaded }: FileSelectorProps) {
       onSubmit={submitCallback}
     >
       <Form>
+        <FormError name="package" render={errorRender} />
         <FileUpload name="package.file" />
         <br />
         <FileDownload name="package.link" label="or insert link to JSON file" />
