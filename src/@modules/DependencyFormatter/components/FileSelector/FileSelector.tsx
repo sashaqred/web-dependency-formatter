@@ -10,33 +10,35 @@ interface FileSelectorProps {
   onFileLoaded?: (json: object) => void;
 }
 
+interface PackageGroup {
+  file: File | undefined;
+  link: string;
+}
+
 interface FileSelectorFormValue {
-  packageFile: File | undefined;
-  packageLink: string;
+  package: PackageGroup;
 }
 
 const fileSelectorSchema = object().shape({
-  packageFile: mixed().test(
-    'Is file JSON',
-    'Please select JSON file.',
-    (file: File | undefined) => {
+  package: object().shape({
+    file: mixed().test('Is file JSON', 'Please select JSON file.', (file: File | undefined) => {
       const isJsonMimeType = file?.type === 'application/json';
       const isJsonExtension = /\.json$/i.test(file?.name || '');
       return !file || isJsonMimeType || isJsonExtension;
-    },
-  ),
-  packageLink: string().url('Must be a valid URL'),
+    }),
+    link: string().url('Must be a valid URL'),
+  }),
 });
 
 export function FileSelector({ onFileLoaded }: FileSelectorProps) {
   const submitCallback = useCallback(
     async (value: FileSelectorFormValue) => {
       try {
-        if (value.packageFile) {
-          const json = await jsonReader(value.packageFile);
+        if (value.package.file) {
+          const json = await jsonReader(value.package.file);
           onFileLoaded?.(json);
-        } else if (value.packageLink) {
-          const json = await fetchFile(value.packageLink);
+        } else if (value.package.link) {
+          const json = await fetchFile(value.package.link);
           onFileLoaded?.(json);
         }
       } catch (error) {
@@ -50,14 +52,14 @@ export function FileSelector({ onFileLoaded }: FileSelectorProps) {
 
   return (
     <Formik
-      initialValues={{ packageFile: undefined, packageLink: '' }}
+      initialValues={{ package: { file: undefined, link: '' } }}
       validationSchema={fileSelectorSchema}
       onSubmit={submitCallback}
     >
       <Form>
-        <FileUpload name="packageFile" />
+        <FileUpload name="package.file" />
         <br />
-        <FileDownload name="packageLink" label="or insert link to JSON file" />
+        <FileDownload name="package.link" label="or insert link to JSON file" />
         <br />
         <Button type="submit">Submit</Button>
       </Form>
