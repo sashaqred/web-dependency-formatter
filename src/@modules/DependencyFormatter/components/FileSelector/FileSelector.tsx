@@ -57,6 +57,8 @@ export function FileSelector({ onFileLoaded }: FileSelectorProps) {
   );
 
   const errorRender = useCallback((error: object | string) => {
+    // TODO #39
+    // Fix warning in console after this render function
     let result: ReactNode = null;
     if (typeof error === 'string') {
       result = (
