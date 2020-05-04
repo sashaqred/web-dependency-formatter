@@ -32,7 +32,7 @@ const fileSelectorSchema = object().shape({
     .test(
       'one-of-require',
       'Please fill one of fields',
-      ({ file, link }: PackageGroup) => !!file && !!link,
+      ({ file, link }: PackageGroup) => !!file || !!link,
     ),
 });
 
