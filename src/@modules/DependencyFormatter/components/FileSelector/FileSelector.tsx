@@ -40,11 +40,12 @@ export function FileSelector({ onFileLoaded }: FileSelectorProps) {
   const submitCallback = useCallback(
     async (value: FileSelectorFormValue) => {
       try {
-        if (value.package.file) {
-          const json = await jsonReader(value.package.file);
+        const { file, link } = value.package;
+        if (file) {
+          const json = await jsonReader(file);
           onFileLoaded?.(json);
-        } else if (value.package.link) {
-          const json = await fetchFile(value.package.link);
+        } else if (link) {
+          const json = await fetchFile(link);
           onFileLoaded?.(json);
         }
       } catch (error) {
