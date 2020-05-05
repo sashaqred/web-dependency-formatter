@@ -1,6 +1,7 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, ReactNode } from 'react';
 import { Form, Formik } from 'formik';
-import { Button } from '@modules/Styles';
+import { Button, FormError } from '@modules/Styles';
+import { object, string, mixed } from 'yup';
 import { jsonReader, fetchFile } from '../../utils';
 import { FileUpload } from '../FileUpload';
 import { FileDownload } from '../FileDownload';
@@ -9,20 +10,42 @@ interface FileSelectorProps {
   onFileLoaded?: (json: object) => void;
 }
 
-interface FileSelectorFormValue {
-  packageFile: File | undefined;
-  packageLink: string;
+interface PackageGroup {
+  file: File | undefined;
+  link: string;
 }
+
+interface FileSelectorFormValue {
+  package: PackageGroup;
+}
+
+const fileSelectorSchema = object().shape({
+  package: object()
+    .shape({
+      file: mixed().test('Is file JSON', 'Please select JSON file.', (file: File | undefined) => {
+        const isJsonMimeType = file?.type === 'application/json';
+        const isJsonExtension = /\.json$/i.test(file?.name || '');
+        return !file || isJsonMimeType || isJsonExtension;
+      }),
+      link: string().url('Must be a valid URL'),
+    })
+    .test(
+      'one-of-require',
+      'Please fill one of fields',
+      ({ file, link }: PackageGroup) => !!file || !!link,
+    ),
+});
 
 export function FileSelector({ onFileLoaded }: FileSelectorProps) {
   const submitCallback = useCallback(
     async (value: FileSelectorFormValue) => {
       try {
-        if (value.packageFile) {
-          const json = await jsonReader(value.packageFile);
+        const { file, link } = value.package;
+        if (file) {
+          const json = await jsonReader(file);
           onFileLoaded?.(json);
-        } else if (value.packageLink) {
-          const json = await fetchFile(value.packageLink);
+        } else if (link) {
+          const json = await fetchFile(link);
           onFileLoaded?.(json);
         }
       } catch (error) {
@@ -34,12 +57,32 @@ export function FileSelector({ onFileLoaded }: FileSelectorProps) {
     [onFileLoaded],
   );
 
+  const errorRender = useCallback((error: object | string) => {
+    // TODO #39
+    // Fix warning in console after this render function
+    let result: ReactNode = null;
+    if (typeof error === 'string') {
+      result = (
+        <>
+          <span>{error}</span>
+          <br />
+        </>
+      );
+    }
+    return result;
+  }, []);
+
   return (
-    <Formik initialValues={{ packageFile: undefined, packageLink: '' }} onSubmit={submitCallback}>
+    <Formik
+      initialValues={{ package: { file: undefined, link: '' } }}
+      validationSchema={fileSelectorSchema}
+      onSubmit={submitCallback}
+    >
       <Form>
-        <FileUpload name="packageFile" />
+        <FormError name="package" render={errorRender} />
+        <FileUpload name="package.file" />
         <br />
-        <FileDownload name="packageLink" label="or insert link to JSON file" />
+        <FileDownload name="package.link" label="or insert link to JSON file" />
         <br />
         <Button type="submit">Submit</Button>
       </Form>
