@@ -11,8 +11,7 @@ export function DependencySelector() {
   const uploadCallback = useCallback(
     (nextDependencies) => {
       dispatch(recieveDependencies(nextDependencies));
-      // TODO #47 Improve url generation
-      history.push('/dependency-formatter/format');
+      history.push('/format');
     },
     [history, dispatch],
   );

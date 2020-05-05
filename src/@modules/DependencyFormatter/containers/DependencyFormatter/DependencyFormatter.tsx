@@ -1,22 +1,20 @@
 import React, { Suspense, lazy } from 'react';
-import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 const DependencyRedactor = lazy(() => import('../DependencyRedactor'));
 const DependencySelector = lazy(() => import('../DependencySelector'));
 
 export function DependencyFormatter() {
-  const { path } = useRouteMatch();
-
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Switch>
-        <Route path={`${path}/upload`}>
+        <Route path="/upload">
           <DependencySelector />
         </Route>
-        <Route exact path={`${path}/format`}>
+        <Route exact path="/format">
           <DependencyRedactor />
         </Route>
-        <Redirect to={`${path}/upload`} />
+        <Redirect to="/upload" />
       </Switch>
     </Suspense>
   );
