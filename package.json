@@ -37,7 +37,7 @@
     "express": "~4.17",
     "formik": "~2.1",
     "node-fetch": "~2.6",
-    "npm-registry-fetch": "~8.0",
+    "npm-registry-fetch": "~8.1",
     "npm-run-all": "~4.1",
     "react": "~16.13",
     "react-dom": "~16.13",
